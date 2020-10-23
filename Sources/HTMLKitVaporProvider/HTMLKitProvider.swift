@@ -90,6 +90,7 @@ extension HTMLTemplate {
     public func render(with context: Context, for request: Request) -> EventLoopFuture<View> {
         request.eventLoop.submit {
             do {
+				try request.application.htmlkit.add(view: self)
                 return try request.htmlkit.render(view: Self.self, with: context)
             } catch HTMLRenderer.Errors.unableToFindFormula {
                 try request.application.htmlkit.add(view: self)
@@ -103,6 +104,7 @@ extension HTMLPage {
     public func render(for request: Request) -> EventLoopFuture<View> {
         request.eventLoop.submit {
             do {
+				try request.application.htmlkit.add(view: self)
                 return try request.htmlkit.render(view: Self.self)
             } catch HTMLRenderer.Errors.unableToFindFormula {
                 try request.application.htmlkit.add(view: self)
